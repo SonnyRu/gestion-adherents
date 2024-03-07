@@ -78,6 +78,24 @@ hr {
     width: 100%; 
 }
 
+/* CSS pour les boutons d'authentification */
+.auth {
+    float: right;
+    margin-top: -1.5rem;
+    margin-right: 2rem !important;
+}
+
+.auth a {
+    margin-left: 0.5rem;
+    text-decoration: none !important;
+    color: #483285;
+}
+
+.auth a:hover {
+    color: 
+    #2c1e53;
+}
+
 
 
 

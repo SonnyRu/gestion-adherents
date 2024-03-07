@@ -37,6 +37,19 @@
                     </ul>
                 </nav>
             </div>
+            <div class="auth">
+                @if(auth()->check())
+                    <a href="{{ route('profile.edit') }}">{{ decrypt(Auth::user()->name) }} {{ decrypt(Auth::user()->first_name) }}</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                        {{ __('Déconnexion') }}
+                    </x-dropdown-link>
+                @else
+                    <a href="{{ route('login') }}">Connexion</a>
+                    <a href="{{ route('register') }}">Inscription</a>
+                @endif
+            </div>
         </div>
     </header>
 </section>
