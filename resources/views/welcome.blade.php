@@ -47,7 +47,6 @@
                     </x-dropdown-link>
                 @else
                     <a href="{{ route('login') }}">Connexion</a>
-                    <a href="{{ route('register') }}">Inscription</a>
                 @endif
             </div>
         </div>
@@ -102,7 +101,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>Copyright © LyonPalme, créé par Sonny Russo</p>
+                <p>Copyright © LyonPalme, créé par Nolan, Matteo, Rania, Elyes & Sonny</p>
             </div>
         </div>
     </div>
