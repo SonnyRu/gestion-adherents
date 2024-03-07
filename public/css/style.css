@@ -60,7 +60,7 @@ hr {
 
 .menu-navigation a:hover,
 .menu-navigation a:active {
-    color: #483285;
+    color: #2c1e53;
 }
 
 .menu-navigation a::before {
@@ -70,7 +70,7 @@ hr {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #483285;
+    background-color: #2c1e53;
     transition: width 0.3s ease; 
 }
 
@@ -147,6 +147,18 @@ hr {
     border: 0.125rem solid #483285; 
     margin-top: 0.625rem; 
     margin-bottom: 1.25rem; 
+}
+
+.image-item a {
+    text-decoration: none !important;
+}
+
+.image-item p {
+    color:#483285;
+}
+
+.image-item p:hover {
+    color: #2c1e53;
 }
 
 
