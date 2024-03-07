@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Folty';
+    src: url('../font/Folty-Medium.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+body, html {
+    font-family: 'Folty', sans-serif !important; 
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS pour le menu de navigation */
+/* Logo */
+header img {
+    max-width: 20vw;
+    display: block;
+    margin: 0 auto;
+}
+
+.max-height-image {
+    max-height: calc(100vh - 185px);
+    object-fit: cover; 
+}
+
+/* Ligne de séparation */
+hr {
+    border: none;
+    height: 0.5px;
+    background-color: rgba(218, 218, 218, 0.2);
+    width: 100%;
+    margin: 20px auto;
+}
+
+/* Menu de navigation */
+.menu-navigation {
+    text-align: center;
+}
+
+.menu-navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.menu-navigation li {
+    display: inline-block;
+    margin-right: 20px;
+    position: relative;
+}
+
+.menu-navigation a {
+    font-size: 17px;
+    line-height: 1.4;
+    text-decoration: none !important;
+    color: #483285;
+}
+
+.menu-navigation a:hover,
+.menu-navigation a:active {
+    color: #483285;
+}
+
+.menu-navigation a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #483285;
+    transition: width 0.3s ease; 
+}
+
+.menu-navigation a:hover::before {
+    width: 100%; 
+}
+
+
+
+
+.image-section {
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-item {
+    margin: 0 10px; 
+}
+
+.image-item img {
+    width: 30vh; 
+    height: 30vh;
+    display: block;
+}
+
+.image-item p {
+    margin-top: 1vh;
+    text-align: center;
+}
+
+.image-item a {
+    text-decoration: none; 
+    color: #333; 
+    display: block; 
+}
+
+
+
+.carousel-section {
+    width: 100%;
+    overflow: hidden; 
+    margin-top: 1rem;
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background-color: rgba(72, 50, 133, 0.8); 
+}
+
+.overlay-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold; 
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+.image-section hr {
+    width: 3.125rem;
+    border: 0.125rem solid #483285; 
+    margin-top: 0.625rem; 
+    margin-bottom: 1.25rem; 
+}
+
+
+
+footer {
+    padding: 1rem 0; 
+    text-align: center; 
+    background-color: #F7FAFC;
+    box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, 0.08);
+    line-height: 3;
+}
+
+footer p {
+    margin: 0; 
+    color: #000; 
+}
