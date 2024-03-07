@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Crypt;
 
 class ProfileController extends Controller
 {
@@ -16,6 +17,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        // Déchiffrer les données
+        $user->name = decrypt($user->name);
+        $user->first_name = decrypt($user->first_name);
+        $user->email = decrypt($user->email);
+        $user->phone_number = decrypt($user->phone_number);
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
@@ -26,13 +34,23 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+
+        // Remplacer les données de l'utilisateur par les données validées du formulaire
+        $user->fill($request->validated());
+
+        // Crypter les nouvelles données
+        $encryptedData = [
+            'name' => Crypt::encrypt($request->input('name')),
+            'first_name' => Crypt::encrypt($request->input('first_name')),
+            'phone_number' => Crypt::encrypt($request->input('phone_number')),
+        ];
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->update($encryptedData);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
