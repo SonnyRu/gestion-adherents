@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LyonPalme</title>
+    
+    <!-- Lien fichier CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+<section id="container">
+    <header>
+        <div class="header-container">
+            <div class="logo-menu">
+                <div class="logo1">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo1">
+                </div>
+                <hr>
+                <nav class="menu-navigation">
+                    <ul>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">Activités</a></li>
+                        <li><a href="#">Agenda du club</a></li>
+                        <li><a href="#">Les Stages</a></li>
+                        <li><a href="#">Nous contacter</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="auth">
+                @if(auth()->check())
+                    <a href="{{ route('profile.edit') }}">{{ Auth::user()->name }} {{ Auth::user()->first_name }}</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                        {{ __('Déconnexion') }}
+                    </x-dropdown-link>
+                @else
+                    <a href="{{ route('login') }}">Connexion</a>
+                @endif
+            </div>
+        </div>
+    </header>
+
+</section>
+<div class="auth">
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <h1>Liste des utilisateurs</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Numéro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($user as $users)
+                    <tr>
+                        <td>{{ $users->name }}</td>
+                        <td>{{ $users->first_name }}</td>
+                        <td>{{ $users->email }}</td>
+                        <td>{{ $users->phone_number }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endsection
+
+<section>
+
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Copyright © LyonPalme, créé par Nolan, Matteo, Rania, Elyes & Sonny</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

@@ -75,4 +75,30 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function index(Request $request)
+    {
+        // Vérifier si l'utilisateur est authentifié
+        if ($request->user()) {
+            // Récupérer l'utilisateur authentifié
+            $user = $request->user();
+    
+            // Déchiffrer les données
+            $user->name = decrypt($user->name);
+            $user->first_name = decrypt($user->first_name);
+            $user->email = $user->email;
+            $user->phone_number = decrypt($user->phone_number);
+    
+            // Passer les données à la vue
+            return view('list', ['user' => $user]);
+        } else {
+            // Si l'utilisateur n'est pas authentifié, rediriger vers la page de connexion
+            return redirect()->route('login');
+        }
+    }
+    
+
 }
+
+
