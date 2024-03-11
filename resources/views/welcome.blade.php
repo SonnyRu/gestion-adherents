@@ -34,6 +34,7 @@
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
+                        <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
                     </ul>
                 </nav>
             </div>

@@ -29,11 +29,12 @@
                 <hr>
                 <nav class="menu-navigation">
                     <ul>
-                        <li><a href="#">Accueil</a></li>
+                        <li><a href="{{ route('welcome') }}">Accueil</a></li>
                         <li><a href="#">Activités</a></li>
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
+                        <li><a href="#">Liste des Adhérents</a></li>
                     </ul>
                 </nav>
             </div>
