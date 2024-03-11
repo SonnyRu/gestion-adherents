@@ -58,9 +58,19 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+            <div class="flex items-center gap-4">
+                <x-primary-button>{{ __('Register') }}</x-primary-button>
+    
+                @if (session('status') === 'profile-registered')
+                    <p
+                        x-data="{ show: true }"
+                        x-show="show"
+                        x-transition
+                        x-init="setTimeout(() => show = false, 2000)"
+                        class="text-sm text-gray-600"
+                    >{{ __('Registered successfully.') }}</p>
+                @endif
+            </div>
         </div>
     </form>
 </x-guest-layout>
