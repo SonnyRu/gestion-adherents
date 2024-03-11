@@ -52,8 +52,9 @@
         </div>
     </header>
 
-    <div class="content">
-            <h1>Liste des utilisateurs</h1>
+    <section class="list-container" id="list-container">
+        <div class="list">
+            <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Liste des utilisateurs</h1>
             <table class="table">
                 <thead>
                     <tr>
@@ -75,7 +76,7 @@
                 </tbody>
             </table>
         </div>
-
+    </section>
 
 
 </section>
