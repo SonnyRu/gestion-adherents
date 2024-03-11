@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -78,25 +79,21 @@ class ProfileController extends Controller
 
 
     public function index(Request $request)
-    {
-        // Vérifier si l'utilisateur est authentifié
-        if ($request->user()) {
-            // Récupérer l'utilisateur authentifié
-            $user = $request->user();
-    
-            // Déchiffrer les données
-            $user->name = decrypt($user->name);
-            $user->first_name = decrypt($user->first_name);
-            $user->email = $user->email;
-            $user->phone_number = decrypt($user->phone_number);
-    
-            // Passer les données à la vue
-            return view('list', ['user' => $user]);
-        } else {
-            // Si l'utilisateur n'est pas authentifié, rediriger vers la page de connexion
-            return redirect()->route('login');
-        }
+{
+    // Récupérer tous les utilisateurs
+    $users = User::all();
+
+    // Décrypter les données de chaque utilisateur
+    foreach ($users as $user) {
+        $user->name = Crypt::decrypt($user->name);
+        $user->first_name = Crypt::decrypt($user->first_name);
+        $user->email = $user->email; // Laissez l'email non modifié car il n'est pas crypté
+        $user->phone_number = Crypt::decrypt($user->phone_number);
     }
+
+    // Passer les utilisateurs à la vue
+    return view('list', ['users' => $users]);
+}
     
 
 }

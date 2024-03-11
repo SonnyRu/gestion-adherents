@@ -52,38 +52,31 @@
         </div>
     </header>
 
-</section>
-<div class="auth">
-@extends('layouts.app')
-
-@section('content')
-    <div class="container">
-        <h1>Liste des utilisateurs</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Numéro</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($user as $users)
+    <div class="content">
+            <h1>Liste des utilisateurs</h1>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $users->name }}</td>
-                        <td>{{ $users->first_name }}</td>
-                        <td>{{ $users->email }}</td>
-                        <td>{{ $users->phone_number }}</td>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-@endsection
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->first_name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone_number }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
-<section>
+
 
 </section>
 
