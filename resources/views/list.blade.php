@@ -29,12 +29,12 @@
                 <hr>
                 <nav class="menu-navigation">
                     <ul>
-                        <li><a href="#">Accueil</a></li>
+                        <li><a href="{{ route('welcome') }}">Accueil</a></li>
                         <li><a href="#">Activités</a></li>
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
-                        <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
+                        <li><a href="#">Liste des Adhérents</a></li>
                     </ul>
                 </nav>
             </div>
@@ -52,50 +52,34 @@
             </div>
         </div>
     </header>
-</section>
 
-<section>
-    <div class="carousel-section position-relative">
-        <div class="carousel-item active">
-            <img src="{{ asset('images/bg.jpg') }}" class="d-block w-100 max-height-image" alt="Image 1">
-            <div class="image-overlay">
-                <h1 class="overlay-text">Bienvenue sur le site Lyon Palme</h1>
-            </div>
+    <section class="list-container" id="list-container">
+        <div class="list">
+            <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Liste des utilisateurs</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->first_name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->phone_number }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="image-section">
-    <div class="image-container">
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-1.jpg') }}" alt="Image 1">
-                <p>Inscription</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-2.jpg') }}" alt="Image 2">
-                <p>Activités</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-3.jpg') }}" alt="Image 3">
-                <p>l'Equipe</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-4.jpg') }}" alt="Image 4">
-                <p>On parle de nous</p>
-            </a>
-        </div>
-    </div>
+
 </section>
 
 <footer>

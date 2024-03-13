@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -75,4 +76,26 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function index(Request $request)
+{
+    // Récupérer tous les utilisateurs
+    $users = User::all();
+
+    // Décrypter les données de chaque utilisateur
+    foreach ($users as $user) {
+        $user->name = Crypt::decrypt($user->name);
+        $user->first_name = Crypt::decrypt($user->first_name);
+        $user->email = $user->email; // Laissez l'email non modifié car il n'est pas crypté
+        $user->phone_number = Crypt::decrypt($user->phone_number);
+    }
+
+    // Passer les utilisateurs à la vue
+    return view('list', ['users' => $users]);
 }
+    
+
+}
+
+
