@@ -1,4 +1,11 @@
 <x-guest-layout>
+
+    <a href="{{ route('dashboard') }}" class="flex items-center justify-end">
+        <x-primary-button>
+            {{ __('Retour') }}
+        </x-primary-button>
+    </a>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

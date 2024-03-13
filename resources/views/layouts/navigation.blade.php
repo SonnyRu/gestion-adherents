@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('register')">
-                        {{ __('Register') }}
+                        {{ __('Register a new member') }}
                     </x-nav-link>
                 </div>
             </div>
