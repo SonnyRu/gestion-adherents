@@ -35,6 +35,9 @@ class RegisteredUserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'phone_number' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'string', 'max:255'],
+            'acceptpartagedonnees' => ['required', 'boolean'],
+            'acceptpolitique' => ['required', 'boolean'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -43,6 +46,9 @@ class RegisteredUserController extends Controller
             'first_name' => encrypt($request->first_name),
             'email' => $request->email,
             'phone_number' => encrypt($request->phone_number),
+            'role' => $request->role,
+            'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
+            'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
             'password' => Hash::make($request->password),
         ]);
 

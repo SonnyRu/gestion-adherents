@@ -12,7 +12,6 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
-            <a class="bg-purple" href="{{ route('register') }}">Inscrire un nageur</a>
         </div>
     </div>
 </x-app-layout>

@@ -4,7 +4,7 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" :value="__('Nom')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
@@ -30,6 +30,16 @@
             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
         </div>
 
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <x-text-input id="role" type="radio" name="role" value="president" required autocomplete="role" /><label for="role" class="text-xs">Président</label>
+            <x-text-input id="role2" type="radio" name="role" value="secretaire" required autocomplete="role" /><label for="role2" class="text-xs">Secrétaire</label>
+            <x-text-input id="role3" type="radio" name="role" value="coach" required autocomplete="role" /><label for="role3" class="text-xs">Coach</label>
+            <x-text-input id="role4" type="radio" name="role" value="nageur" required autocomplete="role" checked/><label for="role4" class="text-xs">Nageur</label>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
@@ -51,6 +61,19 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Case partage de données -->
+        <div class="mt-4">
+            <x-text-input id="acceptpartagedonnees" type="radio" name="acceptpartagedonnees" value="1" required autocomplete="acceptpartagedonnees" /><label for="acceptpartagedonnees" class="text-xs">J'accepte de partager mes données avec les adhérents de Lyonpalme</label>
+            <x-text-input id="acceptpartagedonnees2" type="radio" name="acceptpartagedonnees" value="0" checked required autocomplete="acceptpartagedonnees" /><label for="acceptpartagedonnees" class="text-xs">Je refuse</label>
+            <x-input-error :messages="$errors->get('acceptpartagedonnees')" class="mt-2" />
+        </div>
+
+        <!-- Case politique -->
+        <div class="mt-4">
+            <x-text-input id="acceptpolitique" type="checkbox" name="acceptpolitique" value="1" required autocomplete="acceptpolitique" /><label for="acceptpolitique" class="text-xs">J'accepte la politique de confidentialité</label>
+            <x-input-error :messages="$errors->get('acceptpolitique')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
