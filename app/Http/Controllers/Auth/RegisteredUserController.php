@@ -20,7 +20,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        if (Auth::user()->role == "president" or Auth::user()->role == "secretaire") {
+            return view('auth.register');
+        } else {
+            return view('non_authorized');
+        }
     }
 
     /**
@@ -56,7 +60,9 @@ class RegisteredUserController extends Controller
 
         $user = Auth::user();
 
-        if ($user) {
+        dd($user);
+
+        if ($user and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
             return redirect()->route('register')->with('status', 'profile-registered');
         } else {
             Auth::login($user);
