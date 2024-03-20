@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisteredUserController extends Controller
 {
@@ -38,6 +40,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
         $user = User::create([
             'name' => encrypt($request->name),
             'first_name' => encrypt($request->first_name),
@@ -45,11 +48,12 @@ class RegisteredUserController extends Controller
             'phone_number' => encrypt($request->phone_number),
             'password' => Hash::make($request->password),
         ]);
-
         event(new Registered($user));
 
         Auth::login($user);
-
+        
+        Log::channel('connexion')->info('Le compte de ' . $request->name .' '. $request->first_name. ' vient d\'être créé');
+        
         return redirect(RouteServiceProvider::HOME);
     }
 }
