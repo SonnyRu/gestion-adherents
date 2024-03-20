@@ -63,6 +63,7 @@
                         <th>Prénom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,10 @@
                         <td>{{ $user->first_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone_number }}</td>
+                        <td>
+                            <a href="{{ route('users.edit', $user) }}" class="btn btn-primary">Modifier</a>
+                            <!-- Ajout du bouton "Archiver" plus tard -->
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
