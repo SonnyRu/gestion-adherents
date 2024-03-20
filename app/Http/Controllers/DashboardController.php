@@ -17,6 +17,7 @@ class DashboardController extends Controller
             // Déchiffrer les données de l'utilisateur
             $user->name = decrypt($user->name);
             $user->first_name = decrypt($user->first_name);
+            $user->role = $user->role;
             // Ajoutez d'autres attributs si nécessaire
 
             // Passer les données de l'utilisateur à la vue du tableau de bord

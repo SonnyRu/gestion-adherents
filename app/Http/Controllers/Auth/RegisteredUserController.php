@@ -60,13 +60,17 @@ class RegisteredUserController extends Controller
 
         $user = Auth::user();
 
-        dd($user);
-
-        if ($user and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
+    if ($user) {
+        
+        if (Auth::check()) {
             return redirect()->route('register')->with('status', 'profile-registered');
-        } else {
-            Auth::login($user);
-            return redirect(RouteServiceProvider::HOME);
         }
+        
+       
+        Auth::login($user);
+        return redirect(RouteServiceProvider::HOME);
+    } else {
+        return back()->withErrors(['registration' => 'Failed to register user']);
+    }
     }
 }
