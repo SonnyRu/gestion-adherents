@@ -56,11 +56,17 @@ class RegisteredUserController extends Controller
 
         $user = Auth::user();
 
-        if ($user) {
+    if ($user) {
+        
+        if (Auth::check()) {
             return redirect()->route('register')->with('status', 'profile-registered');
-        } else {
-            Auth::login($user);
-            return redirect(RouteServiceProvider::HOME);
         }
+        
+       
+        Auth::login($user);
+        return redirect(RouteServiceProvider::HOME);
+    } else {
+        return back()->withErrors(['registration' => 'Failed to register user']);
+    }
     }
 }

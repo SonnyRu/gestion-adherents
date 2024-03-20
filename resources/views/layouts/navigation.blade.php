@@ -15,12 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('register')">
-                        {{ __('Register a new member') }}
-                    </x-nav-link>
+                    @if(Auth::check() && Auth::user()->role === 'secretaire' || Auth::user()->role === 'president')
+                        <x-nav-link :href="route('register')">
+                            {{ __('Ajouter un Adhérents') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
-
+ 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
