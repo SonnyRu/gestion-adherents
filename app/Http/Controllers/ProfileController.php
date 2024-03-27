@@ -94,6 +94,7 @@ class ProfileController extends Controller
     // Passer les utilisateurs à la vue
     return view('list', ['users' => $users]);
 }
+
     
 
 }

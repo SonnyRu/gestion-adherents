@@ -20,11 +20,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        if (Auth::user()->role == "president" or Auth::user()->role == "secretaire") {
+        // if (Auth::user()->role == "president" or Auth::user()->role == "secretaire") {
             return view('auth.register');
-        } else {
-            return view('non_authorized');
-        }
+        // } else {
+        //     return view('non_authorized');
+        // }
     }
 
     /**

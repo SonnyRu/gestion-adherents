@@ -63,6 +63,7 @@
                         <th>Prénom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,6 +73,20 @@
                         <td>{{ $user->first_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone_number }}</td>
+                        <td>
+@if($user->count() > 0)
+
+                        
+                            <form action="{{ route('user.archive', $user->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver cet utilisateur?')">Archiver</button>
+                            </form>
+                            
+                            @else
+                            <p>Il n'y a pas d'utilisateurs à afficher.</p>
+@endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -79,6 +94,14 @@
         </div>
     </section>
 
+    <script>
+    function confirmArchive(userId) {
+        if (confirm("Êtes-vous sûr de vouloir archiver cet utilisateur ?")) {
+            //----
+            
+        }
+    }
+</script>
 
 </section>
 
