@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Modifier le profil de ') }} {{ $user->name }}
+            {{ __('Modifier le profil de ') }} {{ $user->name }} {{ $user->first_name }}
         </h2>
     </x-slot>
 
@@ -20,11 +20,24 @@
                             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="$user->name" required autofocus />
                         </div>
 
+                        <!-- Prénom -->
+                        <div class="mt-4">
+                            <x-input-label for="first_name" :value="__('Prénom')" />
+
+                            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="$user->first_name" required autofocus />
+                        </div>
+
                         <!-- Email -->
                         <div class="mt-4">
                             <x-input-label for="email" :value="__('Email')" />
 
                             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$user->email" required />
+                        </div>
+
+                        <div>
+                            <x-input-label for="update_password_password" :value="__('New Password')" />
+                            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

@@ -34,6 +34,15 @@ class UserController extends Controller
             // Ajoutez d'autres règles de validation selon vos besoins
         ]);
 
+        $validatedData['name'] = encrypt($validatedData['name']);
+
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => 'string|min:8', // Validez le mot de passe ici
+            ]);
+            $validatedData['password'] = bcrypt($request->password);
+        }
+
         // Mettre à jour les informations de l'utilisateur
         $user->update($validatedData);
 

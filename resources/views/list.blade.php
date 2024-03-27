@@ -74,7 +74,7 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone_number }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-primary">Modifier</a>
+                            <a href="{{ route('editad', $user) }}" class="btn btn-primary">Modifier</a>
                             <!-- Ajout du bouton "Archiver" plus tard -->
                         </td>
                     </tr>
