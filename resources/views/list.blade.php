@@ -39,6 +39,9 @@
                 </nav>
             </div>
             <div class="auth">
+                
+            
+
                 @if(auth()->check())
                     <a href="{{ route('profile.edit') }}">{{ decrypt(Auth::user()->name) }} {{ decrypt(Auth::user()->first_name) }}</a>
                     <form method="POST" action="{{ route('logout') }}">
@@ -74,18 +77,22 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone_number }}</td>
                         <td>
-@if($user->count() > 0)
 
-                        
-                            <form action="{{ route('user.archive', $user->id) }}" method="POST">
+                    
+                        <form action="{{ route('user.archive', $user->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
+                                @if(Auth::user()->id !== $user->id)
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver cet utilisateur?')">Archiver</button>
+                                @else
+                                <p> </p>
+                                @endif
                             </form>
+                        
+                        
                             
-                            @else
-                            <p>Il n'y a pas d'utilisateurs à afficher.</p>
-@endif
+                            
+
                         </td>
                     </tr>
                     @endforeach
@@ -97,6 +104,13 @@
     <script>
     function confirmArchive(userId) {
         if (confirm("Êtes-vous sûr de vouloir archiver cet utilisateur ?")) {
+            //----
+            
+        }
+    }
+
+    function LastArchive(userId) {
+        if (LastArchive("")) {
             //----
             
         }
