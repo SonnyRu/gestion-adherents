@@ -65,10 +65,10 @@ class ProfileController extends Controller
             Log::channel('modif')->info('Le nom de ' . $olduser->name .' '. $olduser->first_name. ' a été modifié en '.$user->name);
         }
 
-        /**    if ($user->first_name != $oldfirstname){
-          *  Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->first_name);
-        * } 
-        */
+        if ($user->first_name != $oldfirstname){
+            Log::channel('modif')->info('Le prénom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->first_name);
+        } 
+        
         
 
         if ($user->email != $oldemail){
