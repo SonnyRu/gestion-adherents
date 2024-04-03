@@ -17,4 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/app/CertificatsMedicaux
+/app/CertificatsMedicaux/*.pdf
+/app/CertificatsMedicaux/*.png
+/app/CertificatsMedicaux/*.jpeg
