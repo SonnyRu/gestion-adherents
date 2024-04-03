@@ -21,11 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        // if (Auth::user() and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
-             return view('auth.register');
-        // } else {
-        //     return view('non_authorized');
-        // }
+        if (Auth::user() and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
+            return view('auth.register');
+        } else {
+            return view('non_authorized');
+        }
     }
 
     /**
@@ -36,18 +36,30 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $file = $request->file('certificatMedical');
-        //dd($file);
 
-        //$oldname = $file->getClientOriginalName();
-        $id = uniqid();
-        $filename = $id.'.pdf';
-        //dd($file->realPath.$oldname);
-
-        //rename($file->realPath.$oldname, base_path()."/CertificatsMedicaux/".$filename);
-        //dd($file);
-
-        $target_file = app_path()."/CertificatsMedicaux/"; //.$filename
+        //récupère le nom du fichier
+        $oldname = $file->getClientOriginalName();
+        //récupère l'extension du fichier
+        $extension = pathinfo($oldname, PATHINFO_EXTENSION);
         
+        //si c'est une extension pdf, png ou jpeg
+        if ( in_array($extension, ['pdf','png','jpeg']) ) {
+
+            //crée un identifiant unique
+            $id = uniqid();
+            //renomme le fichier avec l'id et l'extension correspondante
+            $filename = $id.'.'.$extension;
+        } else {
+            //n'accepte pas le fichier uploadé
+            $request->validate([
+                'certificatMedical' => ['required', 'file'],
+            ]);
+        }
+
+        //destination du fichier
+        $target_file = app_path()."/CertificatsMedicaux/";
+        
+        //enregistrement du fichier avec son nouveau nom
         $file->move($target_file, $filename);
 
         $request->validate([
@@ -58,7 +70,6 @@ class RegisteredUserController extends Controller
             'role' => ['required', 'string', 'max:255'],
             'acceptpartagedonnees' => ['required', 'boolean'],
             'acceptpolitique' => ['required', 'boolean'],
-            'certificatMedical' => 'required|mimes:pdf',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
