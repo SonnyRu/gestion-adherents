@@ -1,8 +1,8 @@
 <x-guest-layout>
 
-    <a href="{{ route('dashboard') }}" class="flex items-center justify-end">
+    <a href="{{ route('welcome') }}" class="flex items-center justify-end">
         <x-primary-button>
-            {{ __('Retour') }}
+            {{ __("Retour à l'accueil") }}
         </x-primary-button>
     </a>
 
