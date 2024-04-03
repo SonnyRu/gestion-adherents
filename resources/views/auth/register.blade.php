@@ -52,6 +52,16 @@
             <x-input-label for="certificatMedical" :value="__('Certificat médical')" />
             <x-text-input id="certificatMedical" class="form-control block mt-1 w-full" type="file" name="certificatMedical" required autocomplete="certificatMedical" />
             <x-input-error :messages="$errors->get('certificatMedical')" class="mt-2" />
+            
+            @if($errors->any())
+                <div style="color: #FF0000;">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
 
         <!-- Password -->

@@ -35,6 +35,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone_number' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'string', 'max:255'],
+            'acceptpartagedonnees' => ['required', 'boolean'],
+            'acceptpolitique' => ['required', 'boolean'],
+            'certificatMedical' => ['required', 'file'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+
         $file = $request->file('certificatMedical');
 
         //récupère le nom du fichier
@@ -49,57 +62,45 @@ class RegisteredUserController extends Controller
             $id = uniqid();
             //renomme le fichier avec l'id et l'extension correspondante
             $filename = $id.'.'.$extension;
-        } else {
-            //n'accepte pas le fichier uploadé
-            $request->validate([
-                'certificatMedical' => ['required', 'file'],
+
+            //destination du fichier
+            $target_file = app_path()."/CertificatsMedicaux/";
+            
+            //enregistrement du fichier avec son nouveau nom
+            $file->move($target_file, $filename);
+
+
+            $user = User::create([
+                'name' => encrypt($request->name),
+                'first_name' => encrypt($request->first_name),
+                'email' => $request->email,
+                'phone_number' => encrypt($request->phone_number),
+                'role' => $request->role,
+                'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
+                'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
+                'certificatMedical'=> $id,
+                'password' => Hash::make($request->password),
             ]);
-        }
 
-        //destination du fichier
-        $target_file = app_path()."/CertificatsMedicaux/";
-        
-        //enregistrement du fichier avec son nouveau nom
-        $file->move($target_file, $filename);
+            event(new Registered($user));
 
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'first_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'phone_number' => ['required', 'string', 'max:20'],
-            'role' => ['required', 'string', 'max:255'],
-            'acceptpartagedonnees' => ['required', 'boolean'],
-            'acceptpolitique' => ['required', 'boolean'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            $user = Auth::user();
 
-        $user = User::create([
-            'name' => encrypt($request->name),
-            'first_name' => encrypt($request->first_name),
-            'email' => $request->email,
-            'phone_number' => encrypt($request->phone_number),
-            'role' => $request->role,
-            'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
-            'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
-            'certificatMedical'=> $id,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        $user = Auth::user();
-
-        if ($user) {
+            if ($user) {
+                
+                if (Auth::check()) {
+                    return redirect()->route('register')->with('status', 'profile-registered');
+                }
+                
             
-            if (Auth::check()) {
-                return redirect()->route('register')->with('status', 'profile-registered');
+                Auth::login($user);
+                return redirect(RouteServiceProvider::HOME);
+            } else {
+                return back()->withErrors(['registration' => 'Failed to register user']);
             }
-            
-        
-            Auth::login($user);
-            return redirect(RouteServiceProvider::HOME);
+
         } else {
-            return back()->withErrors(['registration' => 'Failed to register user']);
+            return redirect()->back()->withErrors(['erreur' => 'Le format du fichier doit être pdf, png ou jpeg.']);
         }
-        }
+    }
 }
