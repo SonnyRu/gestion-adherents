@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\DecryptUserData;
+use App\Http\Controllers\ArchiveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,6 @@ Route::get('list', [ProfileController::class, 'index'])->name('list');
 
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('editad')->middleware('decryptUserData');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('decryptUserData');
-
+Route::delete('/archive/{userId}', [ArchiveController::class, 'archive'])->name('user.archive');
 
 require __DIR__.'/auth.php';
