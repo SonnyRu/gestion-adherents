@@ -97,6 +97,7 @@ class RegisteredUserController extends Controller
                 
             
                 Auth::login($user);
+                Log::channel('connexion')->info('Le compte de ' . $request->name .' '. $request->first_name. ' vient d\'être créé');
                 return redirect(RouteServiceProvider::HOME);
             } else {
                 return back()->withErrors(['registration' => 'Failed to register user']);
@@ -105,16 +106,5 @@ class RegisteredUserController extends Controller
         } else {
             return redirect()->back()->withErrors(['erreur' => 'Le format du fichier doit être pdf, png ou jpeg.']);
         }
-<<<<<<< HEAD
-        Auth::login($user);
-        
-        Log::channel('connexion')->info('Le compte de ' . $request->name .' '. $request->first_name. ' vient d\'être créé');
-
-        return redirect(RouteServiceProvider::HOME);
-    } else {
-        return back()->withErrors(['registration' => 'Failed to register user']);
-    }
-=======
->>>>>>> af1fb935d2776bac57f702b816c6408f95c9ad8d
     }
 }
