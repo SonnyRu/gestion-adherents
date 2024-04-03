@@ -34,7 +34,9 @@
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
+                        @if(auth()->check())
                         <li><a href="#">Liste des Adhérents</a></li>
+                        @endif
                     </ul>
                 </nav>
             </div>

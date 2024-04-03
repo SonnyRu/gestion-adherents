@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role',
         'acceptpartagedonnees',
         'acceptpolitique',
+        'certificatMedical',
         'password',
     ];
 

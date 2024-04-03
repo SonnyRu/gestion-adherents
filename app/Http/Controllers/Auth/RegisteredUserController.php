@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\UploadedFile;
 
 class RegisteredUserController extends Controller
 {
@@ -45,29 +46,66 @@ class RegisteredUserController extends Controller
             'role' => ['required', 'string', 'max:255'],
             'acceptpartagedonnees' => ['required', 'boolean'],
             'acceptpolitique' => ['required', 'boolean'],
+            'certificatMedical' => ['required', 'file'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
 
-        $user = User::create([
-            'name' => encrypt($request->name),
-            'first_name' => encrypt($request->first_name),
-            'email' => $request->email,
-            'phone_number' => encrypt($request->phone_number),
-            'role' => $request->role,
-            'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
-            'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
-            'password' => Hash::make($request->password),
-        ]);
-        event(new Registered($user));
+        $file = $request->file('certificatMedical');
 
-        $user = Auth::user();
-
-    if ($user) {
+        //récupère le nom du fichier
+        $oldname = $file->getClientOriginalName();
+        //récupère l'extension du fichier
+        $extension = pathinfo($oldname, PATHINFO_EXTENSION);
         
-        if (Auth::check()) {
-            return redirect()->route('register')->with('status', 'profile-registered');
+        //si c'est une extension pdf, png ou jpeg
+        if ( in_array($extension, ['pdf','png','jpeg']) ) {
+
+            //crée un identifiant unique
+            $id = uniqid();
+            //renomme le fichier avec l'id et l'extension correspondante
+            $filename = $id.'.'.$extension;
+
+            //destination du fichier
+            $target_file = app_path()."/CertificatsMedicaux/";
+            
+            //enregistrement du fichier avec son nouveau nom
+            $file->move($target_file, $filename);
+
+
+            $user = User::create([
+                'name' => encrypt($request->name),
+                'first_name' => encrypt($request->first_name),
+                'email' => $request->email,
+                'phone_number' => encrypt($request->phone_number),
+                'role' => $request->role,
+                'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
+                'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
+                'certificatMedical'=> $id,
+                'password' => Hash::make($request->password),
+            ]);
+
+            event(new Registered($user));
+
+            $user = Auth::user();
+
+            if ($user) {
+                
+                if (Auth::check()) {
+                    return redirect()->route('register')->with('status', 'profile-registered');
+                }
+                
+            
+                Auth::login($user);
+                return redirect(RouteServiceProvider::HOME);
+            } else {
+                return back()->withErrors(['registration' => 'Failed to register user']);
+            }
+
+        } else {
+            return redirect()->back()->withErrors(['erreur' => 'Le format du fichier doit être pdf, png ou jpeg.']);
         }
+<<<<<<< HEAD
         Auth::login($user);
         
         Log::channel('connexion')->info('Le compte de ' . $request->name .' '. $request->first_name. ' vient d\'être créé');
@@ -76,5 +114,7 @@ class RegisteredUserController extends Controller
     } else {
         return back()->withErrors(['registration' => 'Failed to register user']);
     }
+=======
+>>>>>>> af1fb935d2776bac57f702b816c6408f95c9ad8d
     }
 }
