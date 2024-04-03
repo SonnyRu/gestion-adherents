@@ -44,11 +44,14 @@
 
                 @if(auth()->check())
                     <a href="{{ route('profile.edit') }}">{{ decrypt(Auth::user()->name) }} {{ decrypt(Auth::user()->first_name) }}</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Déconnexion') }}
-                    </x-dropdown-link>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> 
+                    
+                @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Déconnexion  
+                </a>
+                
                 @else
                     <a href="{{ route('login') }}">Connexion</a>
                 @endif
