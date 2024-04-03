@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -29,6 +29,7 @@ class UserController extends Controller
     {
         // Validation des données
         $validatedData = $request->validate([
+            
             'name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -48,7 +49,8 @@ class UserController extends Controller
 
         // Mettre à jour les informations de l'utilisateur
         $user->update($validatedData);
-
+        $user2=Auth::user();
+        Log::channel('modif')->info('L\'utilisateur '.$user2->id. ' a modifier le profil de ' . $user->id );
         // Redirection avec un message de succès
         return redirect()->route('editad', ['user' => $user->id])->with('success', 'Profil mis à jour avec succès.');
     }

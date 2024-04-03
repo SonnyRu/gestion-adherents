@@ -44,9 +44,7 @@ class ProfileController extends Controller
     {        
         
         $user = $request->user();
-        $oldname = decrypt($user->name);
-        $oldfirstname = decrypt($user->first_name);
-        $oldemail = $user->email;
+        
         // Remplacer les données de l'utilisateur par les données validées du formulaire
         $user->fill($request->validated());
 
@@ -61,22 +59,13 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        if ($user->name != $oldname){
-            Log::channel('modif')->info('Le nom de ' . $olduser->name .' '. $olduser->first_name. ' a été modifié en '.$user->name);
-        }
-
-        if ($user->first_name != $oldfirstname){
-            Log::channel('modif')->info('Le prénom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->first_name);
-        } 
-        
         
 
-        if ($user->email != $oldemail){
-            Log::channel('modif')->info('L\'email de ' . $oldname .' '. $oldfirstname . ' a été modifié en '.$user->email);
-        }
-
+    
         $user->update($encryptedData);
-
+        
+        Log::channel('modif')->info('L\'utilisateur ' . $user->id . ' a modifié son profil');
+        
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
