@@ -56,15 +56,17 @@ class ProfileController extends Controller
         }
 
         if ($user->name != $oldname){
-            Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->name);
+            Log::channel('modif')->info('Le nom de ' . $olduser->name .' '. $olduser->first_name. ' a été modifié en '.$user->name);
         }
 
-        if ($user->first_name != $oldfirstname){
-            Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->name);
-        }
+        /**    if ($user->first_name != $oldfirstname){
+          *  Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->first_name);
+        * } 
+        */
+        
 
         if ($user->email != $oldemail){
-            Log::channel('modif')->info('L\'email de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->email);
+            Log::channel('modif')->info('L\'email de ' . $oldname .' '. $oldfirstname . ' a été modifié en '.$user->email);
         }
 
         $user->update($encryptedData);
