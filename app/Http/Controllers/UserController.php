@@ -30,11 +30,14 @@ class UserController extends Controller
         // Validation des données
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             // Ajoutez d'autres règles de validation selon vos besoins
         ]);
 
         $validatedData['name'] = encrypt($validatedData['name']);
+        $validatedData['first_name'] = encrypt($validatedData['first_name']);
+        
 
         if ($request->filled('password')) {
             $request->validate([
