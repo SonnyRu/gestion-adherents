@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisteredUserController extends Controller
 {
@@ -45,6 +47,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
         $user = User::create([
             'name' => encrypt($request->name),
             'first_name' => encrypt($request->first_name),
@@ -55,7 +58,6 @@ class RegisteredUserController extends Controller
             'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
             'password' => Hash::make($request->password),
         ]);
-
         event(new Registered($user));
 
         $user = Auth::user();
@@ -65,9 +67,10 @@ class RegisteredUserController extends Controller
         if (Auth::check()) {
             return redirect()->route('register')->with('status', 'profile-registered');
         }
-        
-       
         Auth::login($user);
+        
+        Log::channel('connexion')->info('Le compte de ' . $request->name .' '. $request->first_name. ' vient d\'être créé');
+
         return redirect(RouteServiceProvider::HOME);
     } else {
         return back()->withErrors(['registration' => 'Failed to register user']);
