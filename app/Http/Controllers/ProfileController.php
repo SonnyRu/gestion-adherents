@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -40,9 +41,10 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {        
+        
         $user = $request->user();
-
+        
         // Remplacer les données de l'utilisateur par les données validées du formulaire
         $user->fill($request->validated());
 
@@ -57,8 +59,13 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        $user->update($encryptedData);
+        
 
+    
+        $user->update($encryptedData);
+        
+        Log::channel('modif')->info('L\'utilisateur ' . $user->id . ' a modifié son profil');
+        
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
