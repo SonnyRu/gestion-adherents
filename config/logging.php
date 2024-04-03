@@ -54,7 +54,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single','connexion'],
+            'channels' => ['single','connexion','modif'],
             'ignore_exceptions' => false,
         ],
 
@@ -132,7 +132,11 @@ return [
             'path' => storage_path('logs/connexion.log'),
             'level' => 'info',
         ],
-
+        'modif' =>[
+            'driver' =>  'single',
+            'path' => storage_path('logs/modif.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

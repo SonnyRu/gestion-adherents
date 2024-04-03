@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -34,9 +35,12 @@ class ProfileController extends Controller
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {        
+        
         $user = $request->user();
-
+        $oldname = decrypt($user->name);
+        $oldfirstname = decrypt($user->first_name);
+        $oldemail = $user->email;
         // Remplacer les données de l'utilisateur par les données validées du formulaire
         $user->fill($request->validated());
 
@@ -49,6 +53,18 @@ class ProfileController extends Controller
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if ($user->name != $oldname){
+            Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->name);
+        }
+
+        if ($user->first_name != $oldfirstname){
+            Log::channel('modif')->info('Le nom de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->name);
+        }
+
+        if ($user->email != $oldemail){
+            Log::channel('modif')->info('L\'email de ' . $user->name .' '. $user->first_name. ' a été modifié en '.$user->email);
         }
 
         $user->update($encryptedData);
