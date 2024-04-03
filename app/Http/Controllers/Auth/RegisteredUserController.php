@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Http\UploadedFile;
 
 class RegisteredUserController extends Controller
 {
@@ -20,11 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        if (Auth::user() and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
-            return view('auth.register');
-        } else {
-            return view('non_authorized');
-        }
+        // if (Auth::user() and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
+             return view('auth.register');
+        // } else {
+        //     return view('non_authorized');
+        // }
     }
 
     /**
@@ -34,6 +35,21 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $file = $request->file('certificatMedical');
+        //dd($file);
+
+        //$oldname = $file->getClientOriginalName();
+        $id = uniqid();
+        $filename = $id.'.pdf';
+        //dd($file->realPath.$oldname);
+
+        //rename($file->realPath.$oldname, base_path()."/CertificatsMedicaux/".$filename);
+        //dd($file);
+
+        $target_file = app_path()."/CertificatsMedicaux/"; //.$filename
+        
+        $file->move($target_file, $filename);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
@@ -42,6 +58,7 @@ class RegisteredUserController extends Controller
             'role' => ['required', 'string', 'max:255'],
             'acceptpartagedonnees' => ['required', 'boolean'],
             'acceptpolitique' => ['required', 'boolean'],
+            'certificatMedical' => 'required|mimes:pdf',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -53,6 +70,7 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
             'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
             'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
+            'certificatMedical'=> $id,
             'password' => Hash::make($request->password),
         ]);
 
@@ -60,17 +78,17 @@ class RegisteredUserController extends Controller
 
         $user = Auth::user();
 
-    if ($user) {
+        if ($user) {
+            
+            if (Auth::check()) {
+                return redirect()->route('register')->with('status', 'profile-registered');
+            }
+            
         
-        if (Auth::check()) {
-            return redirect()->route('register')->with('status', 'profile-registered');
+            Auth::login($user);
+            return redirect(RouteServiceProvider::HOME);
+        } else {
+            return back()->withErrors(['registration' => 'Failed to register user']);
         }
-        
-       
-        Auth::login($user);
-        return redirect(RouteServiceProvider::HOME);
-    } else {
-        return back()->withErrors(['registration' => 'Failed to register user']);
-    }
-    }
+        }
 }

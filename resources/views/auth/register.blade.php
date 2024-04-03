@@ -6,7 +6,7 @@
         </x-primary-button>
     </a>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
@@ -45,6 +45,13 @@
             <x-text-input id="role3" type="radio" name="role" value="coach" required autocomplete="role" /><label for="role3" class="text-xs">Coach</label>
             <x-text-input id="role4" type="radio" name="role" value="nageur" required autocomplete="role" checked/><label for="role4" class="text-xs">Nageur</label>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
+        <!-- Certificat médical -->
+        <div class="input-group mt-4">
+            <x-input-label for="certificatMedical" :value="__('Certificat médical')" />
+            <x-text-input id="certificatMedical" class="form-control block mt-1 w-full" type="file" name="certificatMedical" required autocomplete="certificatMedical" />
+            <x-input-error :messages="$errors->get('certificatMedical')" class="mt-2" />
         </div>
 
         <!-- Password -->
