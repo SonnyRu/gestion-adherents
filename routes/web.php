@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\DecryptUserData;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\TrombinoscopeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('list', [ProfileController::class, 'index'])->name('list');
+
+Route::get('trombinoscope', [TrombinoscopeController::class, 'index'])->name('trombinoscope');
 
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('editad')->middleware('decryptUserData');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('decryptUserData');
