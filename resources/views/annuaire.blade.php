@@ -59,7 +59,7 @@
             </div>
         </div>
     </header>
-
+    
     <section class="list-container" id="list-container">
     <div class="list">
         <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Annuaire</h1>

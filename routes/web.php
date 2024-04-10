@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\DecryptUserData;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Middleware\CheckRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,15 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('list', [ProfileController::class, 'index'])->name('list');
+Route::get('list', [ProfileController::class, 'index'])->name('list')->middleware(['checkRole:president,secretaire']);
 
 Route::get('annuaire', [ProfileController::class, 'indexannuaire'])->name('annuaire');
+
 
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('editad')->middleware('decryptUserData');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('decryptUserData');
 Route::delete('/archive/{userId}', [ArchiveController::class, 'archive'])->name('user.archive');
 
 require __DIR__.'/auth.php';
+
+
