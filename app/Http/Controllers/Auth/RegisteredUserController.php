@@ -24,7 +24,6 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         if (Auth::user() and (Auth::user()->role == "president" or Auth::user()->role == "secretaire")) {
-        // if (Auth::user()->role == "president" or Auth::user()->role == "secretaire") {
             return view('auth.register');
         } else {
             return view('non_authorized');
@@ -47,6 +46,7 @@ class RegisteredUserController extends Controller
             'acceptpartagedonnees' => ['required', 'boolean'],
             'acceptpolitique' => ['required', 'boolean'],
             'certificatMedical' => ['required', 'file'],
+            'acotise' => ['required', 'boolean'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -67,7 +67,7 @@ class RegisteredUserController extends Controller
             $filename = $id.'.'.$extension;
 
             //destination du fichier
-            $target_file = app_path()."/CertificatsMedicaux/";
+            $target_file = base_path()."/storage/CertificatsMedicaux/";
             
             //enregistrement du fichier avec son nouveau nom
             $file->move($target_file, $filename);
@@ -82,6 +82,7 @@ class RegisteredUserController extends Controller
                 'acceptpartagedonnees' => filter_var($request->acceptpartagedonnees, FILTER_VALIDATE_BOOLEAN),
                 'acceptpolitique' => filter_var($request->acceptpolitique, FILTER_VALIDATE_BOOLEAN),
                 'certificatMedical'=> $id,
+                'acotise' => $request->acotise,
                 'password' => Hash::make($request->password),
             ]);
 

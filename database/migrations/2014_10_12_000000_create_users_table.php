@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('acceptpartagedonnees');
             $table->boolean('acceptpolitique');
             $table->string('certificatMedical');
+            $table->boolean('acotise');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -64,6 +64,15 @@
             @endif
         </div>
 
+        
+        <!-- Case A cotisé ? -->
+        <div class="mt-4">
+            <x-text-input id="acotise" type="radio" name="acotise" value="1" required autocomplete="acotise" /><label for="acotise" class="text-xs">J'ai déja cotisé pour le club</label>
+            <x-text-input id="acotise2" type="radio" name="acotise" value="0" checked required autocomplete="acotise" /><label for="acotise" class="text-xs">Je n'ai pas cotisé</label>
+            <x-input-error :messages="$errors->get('acotise')" class="mt-2" />
+        </div>
+
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
