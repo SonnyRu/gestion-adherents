@@ -35,6 +35,7 @@
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
                         <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
+                        <li><a href="{{ route('annuaire') }}">Annuaire</a></li>
                     </ul>
                 </nav>
             </div>

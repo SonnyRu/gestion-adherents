@@ -34,7 +34,7 @@
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
-                        <li><a href="#">Liste des Adhérents</a></li>
+                        <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
                         <li><a href="{{ route('annuaire') }}">Annuaire</a></li>
                     </ul>
                 </nav>
@@ -61,66 +61,45 @@
     </header>
 
     <section class="list-container" id="list-container">
-        <div class="list">
-            <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Liste des utilisateurs</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Email</th>
-                        <th>Téléphone</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->first_name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone_number }}</td>
-                        <td>
-                            <a href="{{ route('editad', $user) }}" class="btn btn-primary">Modifier</a>
-                            <!-- Ajout du bouton "Archiver" plus tard -->
+    <div class="list">
+        <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Annuaire</h1>
+        <form id="searchForm"> 
+            <input type="search" name="terme" id="searchInput">
+            <input type="submit" name="s" value="Rechercher">
+        </form>
 
-                    
-                        <form action="{{ route('user.archive', $user->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            @if(Auth::user()->id !== $user->id)
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver cet utilisateur?')">Archiver</button>
-                            @else
-                            <p> </p>
-                            @endif
-                        </form>
-                        
-                        
-                            
-                            
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->first_name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone_number }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</section>
 
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <script>
-    function confirmArchive(userId) {
-        if (confirm("Êtes-vous sûr de vouloir archiver cet utilisateur ?")) {
-            //----
-            
-        }
-    }
-
-    function LastArchive(userId) {
-        if (LastArchive("")) {
-            //----
-            
-        }
-    }
+<script>
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var searchTerm = document.getElementById("searchInput").value;
+        var searchElement = document.querySelector('input[name="s"]');
+        searchElement.scrollIntoView({ behavior: 'smooth' });
+        // You can add additional logic here to handle the search functionality
+    });
 </script>
 
 </section>
