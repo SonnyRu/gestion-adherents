@@ -37,6 +37,7 @@
                         @if(auth()->check())
                         <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
                         <li><a href="{{ route('annuaire') }}">Annuaire</a></li>
+                        <li><a href="{{ route('trombinoscope') }}">Trombinoscope</a></li>
                         @endif
                     </ul>
                 </nav>

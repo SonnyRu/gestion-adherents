@@ -68,15 +68,18 @@
     <div class="text-center mt-3">
         <h1 class="mt-5" style="color: #483285; font-weight: bold;">{{ $role }}</h1>
         @foreach($users as $user)
-            <div class="card mx-auto mb-3" style="width: 18rem;">
-                <!-- <img class="card-img-top" src="{{ $user->photo }}" alt="{{ $user->first_name }} {{ $user->name }}"> -->
-                <div class="card-body">
-                    <h5 class="card-title">{{ $user->first_name }} {{ $user->name }}</h5>
+            @if($user->acceptpartagedonnees)
+                <div class="card mx-auto mb-3" style="width: 18rem;">
+                    <!-- <img class="card-img-top" src="{{ $user->photo }}" alt="{{ $user->first_name }} {{ $user->name }}"> -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $user->first_name }} {{ $user->name }}</h5>
+                    </div>
                 </div>
-            </div>
+            @endif
         @endforeach
     </div>
 @endforeach
+
     </section>
 </section>
 

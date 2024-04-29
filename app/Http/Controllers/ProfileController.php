@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -53,14 +54,12 @@ class ProfileController extends Controller
             'name' => Crypt::encrypt($request->input('name')),
             'first_name' => Crypt::encrypt($request->input('first_name')),
             'phone_number' => Crypt::encrypt($request->input('phone_number')),
+            'acceptpartagedonnees' => $request->has('acceptpartagedonnees'),
         ];
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
-        
-
     
         $user->update($encryptedData);
         

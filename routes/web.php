@@ -39,7 +39,6 @@ Route::get('list', [ProfileController::class, 'index'])->name('list')->middlewar
 
 Route::get('annuaire', [ProfileController::class, 'indexannuaire'])->name('annuaire');
 
-
 Route::get('trombinoscope', [TrombinoscopeController::class, 'index'])->name('trombinoscope');
 
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('editad')->middleware('decryptUserData');

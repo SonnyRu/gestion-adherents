@@ -51,4 +51,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Check if the user has a specific role
+     *
+     * @param  string  $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        // Assuming 'role' is a column in your users table
+        // that contains role information
+        return $this->role === $role;
+    }
 }

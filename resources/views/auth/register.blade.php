@@ -39,7 +39,7 @@
 
         <!-- Role -->
         <div class="mt-4">
-            <x-input-label for="role" :value="__('Role')" />
+            <x-input-label for="role" :value="__('Rôle')" />
             <x-text-input id="role" type="radio" name="role" value="president" required autocomplete="role" /><label for="role" class="text-xs">Président</label>
             <x-text-input id="role2" type="radio" name="role" value="secretaire" required autocomplete="role" /><label for="role2" class="text-xs">Secrétaire</label>
             <x-text-input id="role3" type="radio" name="role" value="coach" required autocomplete="role" /><label for="role3" class="text-xs">Coach</label>
@@ -75,7 +75,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Mot de passe')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -87,7 +87,7 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirmer le mot de passe')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
@@ -110,12 +110,9 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
 
             <div class="flex items-center gap-4">
-                <x-primary-button>{{ __('Register') }}</x-primary-button>
+                <x-primary-button>{{ __('Inscrire') }}</x-primary-button>
     
                 @if (session('status') === 'profile-registered')
                     <p
