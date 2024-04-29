@@ -36,6 +36,7 @@
                         <li><a href="#">Nous contacter</a></li>
                         @if(auth()->check())
                         <li><a href="#">Liste des Adhérents</a></li>
+                        <li><a href="{{ route('annuaire') }}">Annuaire</a></li>
                         @endif
                     </ul>
                 </nav>
@@ -47,7 +48,7 @@
                 @if(auth()->check())
                     <a href="{{ route('profile.edit') }}">{{ decrypt(Auth::user()->name) }} {{ decrypt(Auth::user()->first_name) }}</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> 
-                    
+
                 @csrf
                 </form>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

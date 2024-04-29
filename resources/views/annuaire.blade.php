@@ -20,7 +20,7 @@
 </head>
 <body>
 <section id="container">
-<header>
+    <header>
         <div class="header-container">
             <div class="logo-menu">
                 <div class="logo1">
@@ -34,10 +34,8 @@
                         <li><a href="#">Agenda du club</a></li>
                         <li><a href="#">Les Stages</a></li>
                         <li><a href="#">Nous contacter</a></li>
-                        @if(auth()->check())
                         <li><a href="{{ route('list') }}">Liste des Adhérents</a></li>
                         <li><a href="{{ route('annuaire') }}">Annuaire</a></li>
-                        @endif
                     </ul>
                 </nav>
             </div>
@@ -48,7 +46,7 @@
                 @if(auth()->check())
                     <a href="{{ route('profile.edit') }}">{{ decrypt(Auth::user()->name) }} {{ decrypt(Auth::user()->first_name) }}</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> 
-                    
+
                 @csrf
                 </form>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -61,50 +59,49 @@
             </div>
         </div>
     </header>
-</section>
+    
+    <section class="list-container" id="list-container">
+    <div class="list">
+        <h1 style="margin-top: 10vh; text-align: center; font-size: 35px; color: #483285;">Annuaire</h1>
+        <form id="searchForm"> 
+            <input type="search" name="terme" id="searchInput">
+            <input type="submit" name="s" value="Rechercher">
+        </form>
 
-<section>
-    <div class="carousel-section position-relative">
-        <div class="carousel-item active">
-            <img src="{{ asset('images/bg.jpg') }}" class="d-block w-100 max-height-image" alt="Image 1">
-            <div class="image-overlay">
-                <h1 class="overlay-text">Bienvenue sur le site Lyon Palme</h1>
-            </div>
-        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                <tr>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->first_name }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone_number }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </section>
 
-<section class="image-section">
-    <div class="image-container">
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-1.jpg') }}" alt="Image 1">
-                <p>Inscription</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-2.jpg') }}" alt="Image 2">
-                <p>Activités</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-3.jpg') }}" alt="Image 3">
-                <p>l'Equipe</p>
-            </a>
-        </div>
-        <div class="image-item">
-            <hr>
-            <a href="#">
-                <img src="{{ asset('images/image-4.jpg') }}" alt="Image 4">
-                <p>On parle de nous</p>
-            </a>
-        </div>
-    </div>
+<script>
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var searchTerm = document.getElementById("searchInput").value;
+        var searchElement = document.querySelector('input[name="s"]');
+        searchElement.scrollIntoView({ behavior: 'smooth' });
+        // You can add additional logic here to handle the search functionality
+    });
+</script>
+
 </section>
 
 <footer>

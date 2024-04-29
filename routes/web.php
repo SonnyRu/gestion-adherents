@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\DecryptUserData;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\TrombinoscopeController;
+use App\Http\Middleware\CheckRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,10 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('list', [ProfileController::class, 'index'])->name('list');
+Route::get('list', [ProfileController::class, 'index'])->name('list')->middleware(['checkRole:president,secretaire']);
+
+Route::get('annuaire', [ProfileController::class, 'indexannuaire'])->name('annuaire');
+
 
 Route::get('trombinoscope', [TrombinoscopeController::class, 'index'])->name('trombinoscope');
 
@@ -43,3 +47,5 @@ Route::put('/users/{user}', [UserController::class, 'update'])->name('users.upda
 Route::delete('/archive/{userId}', [ArchiveController::class, 'archive'])->name('user.archive');
 
 require __DIR__.'/auth.php';
+
+
